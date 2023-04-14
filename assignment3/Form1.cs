@@ -16,6 +16,7 @@ namespace assignment3
     public partial class frmEncounterNote : Form
     {
         public ManageClinicClass _manageClinicClass=new ManageClinicClass();
+        public VitalClass _vitalClass=new VitalClass();
         public frmEncounterNote()
         {
             InitializeComponent();
@@ -91,6 +92,25 @@ namespace assignment3
         {
             lstProblems.Items.Add(txtProblem.Text);
             txtProblem.Text = "";
+        }
+
+        private void rTxtNote_TextChanged(object sender, EventArgs e)
+        {
+            _vitalClass.ExtractBp(rTxtNote.Text);
+
+            if (_vitalClass.vitals.Count != 0)
+            {
+                for (int j = 0; j < lstBpMeasurment.Items.Count; j++)
+                {
+                    if (_vitalClass.vitals[j] != lstBpMeasurment.Items[j].ToString())
+                    {
+                        for (int i = j; i < _vitalClass.vitals.Count; i++)
+                        {
+                            lstBpMeasurment.Items.Add(_vitalClass.vitals[i].ToString());
+                        }
+                    }
+                }
+            }
         }
     }
 }

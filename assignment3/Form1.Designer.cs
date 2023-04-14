@@ -125,6 +125,7 @@
             this.rTxtNote.Size = new System.Drawing.Size(457, 134);
             this.rTxtNote.TabIndex = 13;
             this.rTxtNote.Text = "";
+            this.rTxtNote.TextChanged += new System.EventHandler(this.rTxtNote_TextChanged);
             // 
             // lstBpMeasurment
             // 
