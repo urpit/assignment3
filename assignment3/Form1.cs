@@ -62,10 +62,22 @@ namespace assignment3
             {
                 nProblem[i]=lstProblems.Items[i].ToString();
             }
-
-            ClinicNoteClass clinicNote = new ClinicNoteClass(nId, nName, nProblem, nBirthDate, nNote);
-            _manageClinicClass.AddPatient(clinicNote);
-            _manageClinicClass.AddNewUser(clinicNote);
+            try
+            {
+                ClinicNoteClass clinicNote = new ClinicNoteClass(nId, nName, nProblem, nBirthDate, nNote);
+                _manageClinicClass.AddPatient(clinicNote);
+                lstPatients.Items.Add($"{nName}(Note Id:{nId})");
+                _manageClinicClass.AddNewUser(clinicNote);
+                txtName.Text = "";
+                lstProblems.Items.Clear();
+                rTxtNote.Text = "";
+                DisableButtons();
+            }
+            catch (Exception ex)
+            {
+               lblError.Text=ex.Message;
+            }
+            
 
         }
 
@@ -78,6 +90,7 @@ namespace assignment3
         private void btnAdd_Click(object sender, EventArgs e)
         {
             lstProblems.Items.Add(txtProblem.Text);
+            txtProblem.Text = "";
         }
     }
 }

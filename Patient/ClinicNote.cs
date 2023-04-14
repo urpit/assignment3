@@ -22,11 +22,19 @@ namespace Patient
             Name = name;
             foreach (string problems in problem)
             {
-                Problem += problems;
+                Problem += $"{problems},";
             }
             ArrayOfProblems = problem;
             BirthDate = birthDate;
             Note = note;
+
+            if (string.IsNullOrEmpty(name))
+                throw new Exception("Please enter your name");
+            if(birthDate > DateTime.Now)
+                    throw new Exception("Your selected date is in future");
+            if (string.IsNullOrEmpty(note))
+                throw new Exception("Please enter a note");
+
         }
        public int GetId()
         {
