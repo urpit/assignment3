@@ -13,13 +13,18 @@ namespace Patient
         public int Id { get; set; }
         public string Name { get; set; }
         public string Problem { get; set; }
+        public string[] ArrayOfProblems { get; set; }
         public DateTime BirthDate { get; set; }
         public string Note { get; set; }
-        public ClinicNote(int id, string name, string problem, DateTime birthDate, string note)
+        public ClinicNote(int id, string name, string[] problem, DateTime birthDate, string note)
         {
             Id = id;
             Name = name;
-            Problem = problem;
+            foreach (string problems in problem)
+            {
+                Problem += problems;
+            }
+            ArrayOfProblems = problem;
             BirthDate = birthDate;
             Note = note;
         }
