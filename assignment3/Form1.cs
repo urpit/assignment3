@@ -17,6 +17,7 @@ namespace assignment3
     {
         public ManageClinicClass _manageClinicClass=new ManageClinicClass();
         public VitalClass _vitalClass=new VitalClass();
+        public List<string> strings = new List<string>();
         public frmEncounterNote()
         {
             InitializeComponent();
@@ -78,7 +79,6 @@ namespace assignment3
             {
                lblError.Text=ex.Message;
             }
-            
 
         }
 
@@ -100,15 +100,15 @@ namespace assignment3
 
             if (_vitalClass.vitals.Count != 0)
             {
-                for (int j = 0; j < lstBpMeasurment.Items.Count; j++)
+                for (int j = 0; j < _vitalClass.vitals.Count; j++)
                 {
-                    if (_vitalClass.vitals[j] != lstBpMeasurment.Items[j].ToString())
+                    if (!strings.Contains(_vitalClass.vitals[j].ToString()))
                     {
-                        for (int i = j; i < _vitalClass.vitals.Count; i++)
-                        {
-                            lstBpMeasurment.Items.Add(_vitalClass.vitals[i].ToString());
-                        }
+                        lstBpMeasurment.Items.Add(_vitalClass.vitals[j].ToString());
+                        strings.Add(_vitalClass.vitals[j].ToString());
                     }
+                    _vitalClass.vitals.Clear();
+                        
                 }
             }
         }
