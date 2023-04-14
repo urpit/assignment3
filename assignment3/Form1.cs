@@ -106,11 +106,12 @@ namespace assignment3
                     {
                         lstBpMeasurment.Items.Add(_vitalClass.vitals[j].ToString());
                         strings.Add(_vitalClass.vitals[j].ToString());
+                        
                     }
-                    _vitalClass.vitals.Clear();
                         
                 }
             }
+            _vitalClass.vitals.Clear();
         }
     }
 }

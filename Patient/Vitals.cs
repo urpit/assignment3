@@ -22,9 +22,16 @@ namespace Patient
                     sStrign = $"{m.Value} mmHg(High)";
                     vitals.Add(sStrign);
                 }
-                else
+
+                if(int.Parse(m.Groups[1].Value) < 90 && int.Parse(m.Groups[2].Value) < 60)
                 {
                     sStrign = $"{m.Value} mmHg(Low)";
+                    vitals.Add(sStrign);
+                }
+
+                if(int.Parse(m.Groups[1].Value) > 90 && int.Parse(m.Groups[1].Value) < 130 && int.Parse(m.Groups[2].Value) < 80 && int.Parse(m.Groups[2].Value) > 60)
+                {
+                    sStrign = $"{m.Value} mmHg";
                     vitals.Add(sStrign);
                 }
             }
