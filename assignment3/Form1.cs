@@ -96,6 +96,7 @@ namespace assignment3
 
         private void rTxtNote_TextChanged(object sender, EventArgs e)
         {
+            _vitalClass.vitals.Clear();
             _vitalClass.ExtractBp(rTxtNote.Text);
 
             if (_vitalClass.vitals.Count != 0)
@@ -111,7 +112,7 @@ namespace assignment3
                         
                 }
             }
-            _vitalClass.vitals.Clear();
+           
         }
     }
 }

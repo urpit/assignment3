@@ -14,26 +14,30 @@ namespace Patient
         private Regex BpRegex = new Regex(@"BP: (\d{3})/(\d{2})");
         public void ExtractBp(string note)
         {
-            Match m = BpRegex.Match(note, (int)RegexOptions.IgnoreCase);
-            if (m.Success && !vitals.Contains(m.Value))
+            MatchCollection m = BpRegex.Matches(note, (int)RegexOptions.IgnoreCase);
+            if (m.Count!=0)
             {
-                if (int.Parse(m.Groups[1].Value) > 130 && int.Parse(m.Groups[2].Value) > 80)
+                for (int i = 0; i < m.Count; i++)
                 {
-                    sStrign = $"{m.Value} mmHg(High)";
-                    vitals.Add(sStrign);
-                }
+                    if (int.Parse(m[i].Groups[1].Value) > 130 && int.Parse(m[i].Groups[2].Value) > 80)
+                    {
+                        sStrign = $"{m[i].Value} mmHg(High)";
+                        vitals.Add(sStrign);
+                    }
 
-                if(int.Parse(m.Groups[1].Value) < 90 && int.Parse(m.Groups[2].Value) < 60)
-                {
-                    sStrign = $"{m.Value} mmHg(Low)";
-                    vitals.Add(sStrign);
-                }
+                    if (int.Parse(m[i].Groups[1].Value) < 90 && int.Parse(m[i].Groups[2].Value) < 60)
+                    {
+                        sStrign = $"{m[i].Value} mmHg(Low)";
+                        vitals.Add(sStrign);
+                    }
 
-                if(int.Parse(m.Groups[1].Value) > 90 && int.Parse(m.Groups[1].Value) < 130 && int.Parse(m.Groups[2].Value) < 80 && int.Parse(m.Groups[2].Value) > 60)
-                {
-                    sStrign = $"{m.Value} mmHg";
-                    vitals.Add(sStrign);
+                    if (int.Parse(m[i].Groups[1].Value) > 90 && int.Parse(m[i].Groups[1].Value) < 130 && int.Parse(m[i].Groups[2].Value) < 80 && int.Parse(m[i].Groups[2].Value) > 60)
+                    {
+                        sStrign = $"{m[i].Value} mmHg";
+                        vitals.Add(sStrign);
+                    }
                 }
+               
             }
            
         }
