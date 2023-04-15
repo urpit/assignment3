@@ -45,6 +45,7 @@ namespace assignment3
             btnAdd.Enabled = false;
             btnAddNote.Enabled = false;
             rTxtNote.Enabled = false;
+            btnRemove.Enabled = false;
         }
         private void frmEncounterNote_Load(object sender, EventArgs e)
         {
@@ -100,12 +101,14 @@ namespace assignment3
             txtName.Text = "";
             txtNoteId.Text = "";
             lstProblems.Items.Clear();
+            lstBpMeasurment.Items.Clear();
             lblError.Text = "";
             txtNoteId.Text = _manageClinicClass.GetNewID().ToString();
             btnUpdate.Enabled = false;
             btnDelete.Enabled = false;
             btnAddNote.Enabled = true;
             btnAdd.Enabled = true;
+            btnRemove.Enabled=true;
             EnabledButtons();
         }
 
@@ -113,6 +116,7 @@ namespace assignment3
         {
             lstProblems.Items.Add(txtProblem.Text);
             txtProblem.Text = "";
+            lblError.Text = "";
         }
 
         private void rTxtNote_TextChanged(object sender, EventArgs e)
@@ -149,6 +153,7 @@ namespace assignment3
             lblError.Text = "";
             btnAddNote.Enabled= false;
             btnAdd.Enabled=true;
+            btnRemove.Enabled = true;
             btnUpdate.Enabled= true;
             btnDelete.Enabled= true;
             string nName = lstPatients.GetItemText(lstPatients.SelectedItem);
@@ -201,7 +206,7 @@ namespace assignment3
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if(lstPatients.SelectedIndex !=0)
+            if(lstPatients.SelectedIndex !=-1)
             {
                 int index = _manageClinicClass.ClinicNotes.FindIndex(id => id.Id == int.Parse(txtNoteId.Text));
                 _manageClinicClass.ClinicNotes.RemoveAt(index);
@@ -209,10 +214,26 @@ namespace assignment3
                 lstPatients.Items.Remove(lstPatients.SelectedItem.ToString());
                 lblError.Text = "Your note has been successfully Deleted";
                 lblError.ForeColor = Color.Green;
+                DisableButtons();
             }
             else
             {
                 lblError.Text = "Please select patient name first";
+                lblError.ForeColor = Color.Red;
+            }
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            if(lstProblems.SelectedIndex !=-1)
+            {
+                lstProblems.Items.Remove(lstProblems.SelectedItem.ToString());
+                lblError.Text = "Your problem has been successfully Removed";
+                lblError.ForeColor = Color.Green;
+            }
+            else
+            {
+                lblError.Text = "Please select problem first";
                 lblError.ForeColor = Color.Red;
             }
         }

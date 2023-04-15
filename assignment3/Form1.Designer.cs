@@ -50,11 +50,13 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.lstPatients = new System.Windows.Forms.ListBox();
             this.lblError = new System.Windows.Forms.Label();
+            this.btnRemove = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnRemove);
             this.groupBox1.Controls.Add(this.btnUpdate);
             this.groupBox1.Controls.Add(this.btnDelete);
             this.groupBox1.Controls.Add(this.btnAdd);
@@ -102,7 +104,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(235, 169);
+            this.btnAdd.Location = new System.Drawing.Point(193, 168);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 15;
@@ -265,6 +267,16 @@
             this.lblError.Size = new System.Drawing.Size(0, 13);
             this.lblError.TabIndex = 3;
             // 
+            // btnRemove
+            // 
+            this.btnRemove.Location = new System.Drawing.Point(313, 169);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnRemove.TabIndex = 18;
+            this.btnRemove.Text = "Remove";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            // 
             // frmEncounterNote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -308,6 +320,7 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.ListBox lstPatients;
         private System.Windows.Forms.Label lblError;
+        private System.Windows.Forms.Button btnRemove;
     }
 }
 
