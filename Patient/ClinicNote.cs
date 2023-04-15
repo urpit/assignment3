@@ -31,6 +31,7 @@ namespace Patient
             Note = note;
             lstName = $"{name}(Note Id:{id})";
            
+            //Error Handling
             if (string.IsNullOrEmpty(name))
                 throw new Exception("Please enter your name");
             if(birthDate > DateTime.Now)

@@ -15,6 +15,8 @@ namespace Patient
         private Regex HrRegex = new Regex(@"HR: (\d{2,3})");
         private Regex RrRegex = new Regex(@"RR: (\d{2})");
         private Regex TRegex = new Regex(@"T: (\d{2}\.*\d{1,2})");
+
+        //Methods for Extracting the measurments 
         public void ExtractBp(string note)
         {
             MatchCollection m = BpRegex.Matches(note);

@@ -15,11 +15,13 @@ namespace Patient
         private string FilePath = "Patient.txt";
         private int value = 1;
 
+        //Method for adding information into the list
         public void AddPatient(ClinicNote clinicNote)
         {
             ClinicNotes.Add(clinicNote);
         }
         
+        //Method for getting new ID
         public int GetNewID()
         {
 
@@ -32,6 +34,7 @@ namespace Patient
             }
             return value;
         }
+        //Method for creating the text file
         public void AddNewUser(ClinicNote clinicNote)
         {
             using (StreamWriter writer = new StreamWriter(FilePath, true))
@@ -41,6 +44,8 @@ namespace Patient
 
             }
         }
+
+        //method for updating the text file
         public void UpdateUser()
         {
             using (StreamWriter writer = new StreamWriter("Patient.txt"))
@@ -52,6 +57,7 @@ namespace Patient
             }
         }
 
+        //method for reading the information from the text file
         public void ReadUser()
         {
             if (File.Exists(FilePath))

@@ -15,6 +15,7 @@ namespace assignment3
 {
     public partial class frmEncounterNote : Form
     {
+        //Making Reference
         public ManageClinicClass _manageClinicClass=new ManageClinicClass();
         public VitalClass _vitalClass=new VitalClass();
         public List<string> BpMeasurmentlst = new List<string>();
