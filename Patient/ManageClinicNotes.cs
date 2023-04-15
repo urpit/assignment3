@@ -10,6 +10,8 @@ namespace Patient
     public class ManageClinicNotes
     {
         public List<ClinicNote> ClinicNotes=new List<ClinicNote>();
+        public string line { get; set; }
+        public string[] part { get; set; }
         private string FilePath = "Patient.txt";
         private int value = 1;
 
@@ -17,13 +19,7 @@ namespace Patient
         {
             ClinicNotes.Add(clinicNote);
         }
-        public ManageClinicNotes()
-        {
-            if(File.Exists(FilePath))
-            {
-                File.Delete(FilePath);
-            }
-        }
+        
         public int GetNewID()
         {
 
@@ -43,6 +39,28 @@ namespace Patient
 
                 writer.WriteLine(clinicNote.ToString());
 
+            }
+        }
+
+        public void ReadUser()
+        {
+            if (File.Exists(FilePath))
+            {
+                using (StreamReader reader = new StreamReader(FilePath))
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        part = line.Split('|');
+                        int nId = int.Parse(part[0]);
+                        string nName = part[1];
+                        string[] nProblems = part[2].Split(',');
+                        DateTime nBirthDate = DateTime.Parse(part[3]);
+                        string nNote = part[4].Replace('+', '\n');
+
+                        ClinicNote nClinicNote = new ClinicNote(nId, nName, nProblems, nBirthDate, nNote);
+                        ClinicNotes.Add(nClinicNote);
+                    }
+                }
             }
         }
 

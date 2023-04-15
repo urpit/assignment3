@@ -16,6 +16,7 @@ namespace Patient
         public string[] ArrayOfProblems { get; set; }
         public DateTime BirthDate { get; set; }
         public string Note { get; set; }
+        public string lstName { get; set; }
         public ClinicNote(int id, string name, string[] problem, DateTime birthDate, string note)
         {
             Id = id;
@@ -27,6 +28,7 @@ namespace Patient
             ArrayOfProblems = problem;
             BirthDate = birthDate;
             Note = note;
+            lstName = $"{name}(Note Id:{id})";
 
             if (string.IsNullOrEmpty(name))
                 throw new Exception("Please enter your name");
@@ -42,7 +44,7 @@ namespace Patient
         }
         public override string ToString()
         {
-            return $"{Id}|{Name}|{Problem}|{BirthDate}|{Note}";
+            return $"{Id}|{Name}|{Problem}|{BirthDate.ToString()}|{Note.Replace("\n","+")}";
         }
 
 

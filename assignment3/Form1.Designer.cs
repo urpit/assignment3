@@ -252,6 +252,7 @@
             this.lstPatients.Name = "lstPatients";
             this.lstPatients.Size = new System.Drawing.Size(120, 342);
             this.lstPatients.TabIndex = 2;
+            this.lstPatients.SelectedIndexChanged += new System.EventHandler(this.lstPatients_SelectedIndexChanged);
             // 
             // lblError
             // 

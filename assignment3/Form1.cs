@@ -28,11 +28,10 @@ namespace assignment3
             txtName.Enabled = true;
             txtProblem.Enabled = true;
             dtpBirthDate.Enabled = true;
-            btnAdd.Enabled = true;
-            btnDelete.Enabled = false;
-            btnUpdate.Enabled = false;
-            btnAdd.Enabled = true;
-            btnAddNote.Enabled = true;
+            
+           
+            
+            rTxtNote.Enabled = true;
         }
         public new void DisableButtons()
         {
@@ -45,9 +44,18 @@ namespace assignment3
             btnUpdate.Enabled = false;
             btnAdd.Enabled = false;
             btnAddNote.Enabled = false;
+            rTxtNote.Enabled = false;
         }
         private void frmEncounterNote_Load(object sender, EventArgs e)
         {
+            _manageClinicClass.ReadUser();
+            foreach (var user in _manageClinicClass.ClinicNotes)
+            {
+                if(user.Name!=null)
+                {
+                    lstPatients.Items.Add($"{user.Name}(Note Id:{user.Id})");
+                }
+            }
             DisableButtons();
         }
 
@@ -70,10 +78,13 @@ namespace assignment3
                 _manageClinicClass.AddPatient(clinicNote);
                 lstPatients.Items.Add($"{nName}(Note Id:{nId})");
                 _manageClinicClass.AddNewUser(clinicNote);
+                lblError.Text = "Your Note Has been added successfully";
+                lblError.ForeColor = Color.Green;
+                DisableButtons();
+                rTxtNote.Text = "";
                 txtName.Text = "";
                 lstProblems.Items.Clear();
-                rTxtNote.Text = "";
-                DisableButtons();
+                lstBpMeasurment.Items.Clear();
             }
             catch (Exception ex)
             {
@@ -84,8 +95,13 @@ namespace assignment3
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            EnabledButtons();
+            rTxtNote.Text = "";
+            txtName.Text = "";
+            txtNoteId.Text = "";
+            lstProblems.Items.Clear();
+            lblError.Text = "";
             txtNoteId.Text = _manageClinicClass.GetNewID().ToString();
+            EnabledButtons();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -116,6 +132,35 @@ namespace assignment3
                 }
             }
            
+        }
+
+        private void lstPatients_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            rTxtNote.Text = "";
+            txtName.Text = "";
+            txtNoteId.Text = "";
+            lstProblems.Items.Clear();
+            EnabledButtons();
+            lblError.Text = "";
+            btnAddNote.Enabled= false;
+            btnAdd.Enabled=true;
+            btnUpdate.Enabled= true;
+            btnDelete.Enabled= true;
+            string nName = lstPatients.GetItemText(lstPatients.SelectedItem);
+            foreach (var user in _manageClinicClass.ClinicNotes)
+            {
+                if(nName==user.lstName)
+                {
+                    txtNoteId.Text = user.Id.ToString();
+                    txtName.Text = user.Name;
+                    dtpBirthDate.Value = user.BirthDate;
+                    rTxtNote.Text = user.Note;
+                    foreach (var prob in user.ArrayOfProblems)
+                    {
+                        lstProblems.Items.Add(prob);
+                    }
+                }
+            }
         }
     }
 }

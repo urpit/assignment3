@@ -17,7 +17,7 @@ namespace Patient
         private Regex TRegex = new Regex(@"T: (\d{2}\.*\d{1,2})");
         public void ExtractBp(string note)
         {
-            MatchCollection m = BpRegex.Matches(note, (int)RegexOptions.IgnoreCase);
+            MatchCollection m = BpRegex.Matches(note);
 
             for (int i = 0; i < m.Count; i++)
             {
@@ -43,7 +43,7 @@ namespace Patient
         }
         public void ExtractHr(string note)
         {
-            MatchCollection m1 = HrRegex.Matches(note, (int)RegexOptions.IgnoreCase);
+            MatchCollection m1 = HrRegex.Matches(note);
             for (int i = 0; i < m1.Count; i++)
             {
                 if (int.Parse(m1[i].Groups[1].Value) > 100)
@@ -66,7 +66,7 @@ namespace Patient
         }
         public void ExtractRr(string note)
         {
-            MatchCollection m2 = RrRegex.Matches(note, (int)RegexOptions.IgnoreCase);
+            MatchCollection m2 = RrRegex.Matches(note);
             for (int i = 0; i < m2.Count; i++)
             {
                 if (int.Parse(m2[i].Groups[1].Value) > 16)
@@ -89,7 +89,7 @@ namespace Patient
         }
         public void ExtractT(string note)
         {
-            MatchCollection m3 = TRegex.Matches(note, (int)RegexOptions.IgnoreCase);
+            MatchCollection m3 = TRegex.Matches(note);
             for (int i = 0; i < m3.Count; i++)
             {
                 if (double.Parse(m3[i].Groups[1].Value) > 37.2)
