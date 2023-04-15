@@ -41,6 +41,16 @@ namespace Patient
 
             }
         }
+        public void UpdateUser()
+        {
+            using (StreamWriter writer = new StreamWriter("Patient.txt"))
+            {
+                foreach (var updatedNote in ClinicNotes)
+                {
+                    writer.WriteLine(updatedNote.ToString());
+                }
+            }
+        }
 
         public void ReadUser()
         {

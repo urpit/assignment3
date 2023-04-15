@@ -81,6 +81,7 @@ namespace assignment3
                 lblError.Text = "Your Note Has been added successfully";
                 lblError.ForeColor = Color.Green;
                 DisableButtons();
+               
                 rTxtNote.Text = "";
                 txtName.Text = "";
                 lstProblems.Items.Clear();
@@ -101,6 +102,10 @@ namespace assignment3
             lstProblems.Items.Clear();
             lblError.Text = "";
             txtNoteId.Text = _manageClinicClass.GetNewID().ToString();
+            btnUpdate.Enabled = false;
+            btnDelete.Enabled = false;
+            btnAddNote.Enabled = true;
+            btnAdd.Enabled = true;
             EnabledButtons();
         }
 
@@ -160,6 +165,55 @@ namespace assignment3
                         lstProblems.Items.Add(prob);
                     }
                 }
+            }
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            int index = _manageClinicClass.ClinicNotes.FindIndex(id => id.Id == int.Parse(txtNoteId.Text));
+
+            if (index != -1)
+            {
+                _manageClinicClass.ClinicNotes[index].Name = txtName.Text;
+                string[] nProblem = new string[lstProblems.Items.Count];
+                for (int i = 0; i < lstProblems.Items.Count; i++)
+                {
+                    nProblem[i] = lstProblems.Items[i].ToString();
+                }
+                _manageClinicClass.ClinicNotes[index].Problem = "";
+                foreach (string problem in nProblem)
+                {
+                    _manageClinicClass.ClinicNotes[index].Problem += $"{problem},";
+                }
+                _manageClinicClass.ClinicNotes[index].ArrayOfProblems = null;
+                _manageClinicClass.ClinicNotes[index].ArrayOfProblems = nProblem;
+                _manageClinicClass.ClinicNotes[index].Note = rTxtNote.Text;
+                _manageClinicClass.ClinicNotes[index].BirthDate = dtpBirthDate.Value;
+                
+                _manageClinicClass.UpdateUser();
+               
+                lblError.Text = "Your note has been successfully Updated";
+                lblError.ForeColor = Color.Green;
+                DisableButtons();
+            }
+
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if(lstPatients.SelectedIndex !=0)
+            {
+                int index = _manageClinicClass.ClinicNotes.FindIndex(id => id.Id == int.Parse(txtNoteId.Text));
+                _manageClinicClass.ClinicNotes.RemoveAt(index);
+                _manageClinicClass.UpdateUser();
+                lstPatients.Items.Remove(lstPatients.SelectedItem.ToString());
+                lblError.Text = "Your note has been successfully Deleted";
+                lblError.ForeColor = Color.Green;
+            }
+            else
+            {
+                lblError.Text = "Please select patient name first";
+                lblError.ForeColor = Color.Red;
             }
         }
     }
