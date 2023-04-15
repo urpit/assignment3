@@ -17,7 +17,7 @@ namespace assignment3
     {
         public ManageClinicClass _manageClinicClass=new ManageClinicClass();
         public VitalClass _vitalClass=new VitalClass();
-        public List<string> strings = new List<string>();
+        public List<string> BpMeasurmentlst = new List<string>();
         public frmEncounterNote()
         {
             InitializeComponent();
@@ -145,6 +145,7 @@ namespace assignment3
         {
             try
             {
+                //Calling methods
                 _vitalClass.vitals.Clear();
                 _vitalClass.ExtractBp(rTxtNote.Text);
                 _vitalClass.ExtractHr(rTxtNote.Text);
@@ -155,10 +156,10 @@ namespace assignment3
                 {
                     for (int j = 0; j < _vitalClass.vitals.Count; j++)
                     {
-                        if (!strings.Contains(_vitalClass.vitals[j].ToString()))
+                        if (!BpMeasurmentlst.Contains(_vitalClass.vitals[j].ToString()))
                         {
                             lstBpMeasurment.Items.Add(_vitalClass.vitals[j].ToString());
-                            strings.Add(_vitalClass.vitals[j].ToString());
+                            BpMeasurmentlst.Add(_vitalClass.vitals[j].ToString());
 
                         }
 
@@ -217,11 +218,29 @@ namespace assignment3
             {
             try
             {
+                //Using lambda expression for finding index
                 int index = _manageClinicClass.ClinicNotes.FindIndex(id => id.Id == int.Parse(txtNoteId.Text));
 
                 if (index != -1)
                 {
+                    //Error handling
+                    if(dtpBirthDate.Value>DateTime.Now)
+                    {
+                        lblError.Text = "Do not select date in future";
+                        return;
+                    }  
+                    if(string.IsNullOrEmpty(txtName.Text))
+                    {
+                        lblError.Text = "Please enter a name";
+                        return;
+                    }
+                    if (string.IsNullOrEmpty(rTxtNote.Text))
+                    {
+                        lblError.Text = "Please enter a note";
+                        return;
+                    }
 
+                    //Changing values at particular index in list
                     _manageClinicClass.ClinicNotes[index].Name = txtName.Text;
                     string[] nProblem = new string[lstProblems.Items.Count];
                     for (int i = 0; i < lstProblems.Items.Count; i++)
@@ -259,7 +278,10 @@ namespace assignment3
             {
                 if (lstPatients.SelectedIndex != -1)
                 {
+                    //Using lambda expression for finding index
+
                     int index = _manageClinicClass.ClinicNotes.FindIndex(id => id.Id == int.Parse(txtNoteId.Text));
+                    //Removing the patient information
                     _manageClinicClass.ClinicNotes.RemoveAt(index);
                     _manageClinicClass.UpdateUser();
                     lstPatients.Items.Remove(lstPatients.SelectedItem.ToString());
