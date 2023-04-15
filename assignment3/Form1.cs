@@ -98,6 +98,9 @@ namespace assignment3
         {
             _vitalClass.vitals.Clear();
             _vitalClass.ExtractBp(rTxtNote.Text);
+            _vitalClass.ExtractHr(rTxtNote.Text);
+            _vitalClass.ExtractRr(rTxtNote.Text);
+            _vitalClass.ExtractT(rTxtNote.Text);
 
             if (_vitalClass.vitals.Count != 0)
             {

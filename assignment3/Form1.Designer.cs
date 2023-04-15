@@ -130,9 +130,9 @@
             // lstBpMeasurment
             // 
             this.lstBpMeasurment.FormattingEnabled = true;
-            this.lstBpMeasurment.Location = new System.Drawing.Point(434, 67);
+            this.lstBpMeasurment.Location = new System.Drawing.Point(423, 67);
             this.lstBpMeasurment.Name = "lstBpMeasurment";
-            this.lstBpMeasurment.Size = new System.Drawing.Size(82, 95);
+            this.lstBpMeasurment.Size = new System.Drawing.Size(117, 95);
             this.lstBpMeasurment.TabIndex = 12;
             // 
             // lstProblems
@@ -184,7 +184,7 @@
             // lblBp
             // 
             this.lblBp.AutoSize = true;
-            this.lblBp.Location = new System.Drawing.Point(431, 43);
+            this.lblBp.Location = new System.Drawing.Point(420, 43);
             this.lblBp.Name = "lblBp";
             this.lblBp.Size = new System.Drawing.Size(96, 13);
             this.lblBp.TabIndex = 5;
