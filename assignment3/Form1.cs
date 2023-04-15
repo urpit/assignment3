@@ -28,9 +28,6 @@ namespace assignment3
             txtName.Enabled = true;
             txtProblem.Enabled = true;
             dtpBirthDate.Enabled = true;
-            
-           
-            
             rTxtNote.Enabled = true;
         }
         public new void DisableButtons()
@@ -49,15 +46,23 @@ namespace assignment3
         }
         private void frmEncounterNote_Load(object sender, EventArgs e)
         {
-            _manageClinicClass.ReadUser();
-            foreach (var user in _manageClinicClass.ClinicNotes)
+            try
             {
-                if(user.Name!=null)
+                _manageClinicClass.ReadUser();
+                foreach (var user in _manageClinicClass.ClinicNotes)
                 {
-                    lstPatients.Items.Add($"{user.Name}(Note Id:{user.Id})");
+                    if (user.Name != null)
+                    {
+                        lstPatients.Items.Add($"{user.Name}(Note Id:{user.Id})");
+                    }
                 }
+                DisableButtons();
             }
-            DisableButtons();
+            catch(Exception ex)
+            {
+                lblError.Text = ex.Message;
+                lblError.ForeColor = Color.Red;
+            }
         }
 
         private void btnAddNote_Click(object sender, EventArgs e)
@@ -97,143 +102,204 @@ namespace assignment3
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            rTxtNote.Text = "";
-            txtName.Text = "";
-            txtNoteId.Text = "";
-            lstProblems.Items.Clear();
-            lstBpMeasurment.Items.Clear();
-            lblError.Text = "";
-            txtNoteId.Text = _manageClinicClass.GetNewID().ToString();
-            btnUpdate.Enabled = false;
-            btnDelete.Enabled = false;
-            btnAddNote.Enabled = true;
-            btnAdd.Enabled = true;
-            btnRemove.Enabled=true;
-            EnabledButtons();
+            try
+            {
+                rTxtNote.Text = "";
+                txtName.Text = "";
+                txtNoteId.Text = "";
+                lstProblems.Items.Clear();
+                lstBpMeasurment.Items.Clear();
+                lblError.Text = "";
+                dtpBirthDate.Value = DateTime.Now;
+                txtNoteId.Text = _manageClinicClass.GetNewID().ToString();
+                btnUpdate.Enabled = false;
+                btnDelete.Enabled = false;
+                btnAddNote.Enabled = true;
+                btnAdd.Enabled = true;
+                btnRemove.Enabled = true;
+                EnabledButtons();
+            }
+            catch(Exception ex)
+            {
+                lblError.Text = ex.Message;
+                lblError.ForeColor = Color.Red;
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            lstProblems.Items.Add(txtProblem.Text);
-            txtProblem.Text = "";
-            lblError.Text = "";
+            try
+            {
+                lstProblems.Items.Add(txtProblem.Text);
+                txtProblem.Text = "";
+                lblError.Text = "";
+            }
+            catch(Exception ex)
+            {
+                lblError.Text = ex.Message;
+                lblError.ForeColor = Color.Red;
+            }
         }
 
         private void rTxtNote_TextChanged(object sender, EventArgs e)
         {
-            _vitalClass.vitals.Clear();
-            _vitalClass.ExtractBp(rTxtNote.Text);
-            _vitalClass.ExtractHr(rTxtNote.Text);
-            _vitalClass.ExtractRr(rTxtNote.Text);
-            _vitalClass.ExtractT(rTxtNote.Text);
-
-            if (_vitalClass.vitals.Count != 0)
+            try
             {
-                for (int j = 0; j < _vitalClass.vitals.Count; j++)
+                _vitalClass.vitals.Clear();
+                _vitalClass.ExtractBp(rTxtNote.Text);
+                _vitalClass.ExtractHr(rTxtNote.Text);
+                _vitalClass.ExtractRr(rTxtNote.Text);
+                _vitalClass.ExtractT(rTxtNote.Text);
+
+                if (_vitalClass.vitals.Count != 0)
                 {
-                    if (!strings.Contains(_vitalClass.vitals[j].ToString()))
+                    for (int j = 0; j < _vitalClass.vitals.Count; j++)
                     {
-                        lstBpMeasurment.Items.Add(_vitalClass.vitals[j].ToString());
-                        strings.Add(_vitalClass.vitals[j].ToString());
-                        
+                        if (!strings.Contains(_vitalClass.vitals[j].ToString()))
+                        {
+                            lstBpMeasurment.Items.Add(_vitalClass.vitals[j].ToString());
+                            strings.Add(_vitalClass.vitals[j].ToString());
+
+                        }
+
                     }
-                        
                 }
+            }
+            catch(Exception ex)
+            {
+                lblError.Text = ex.Message;
+                lblError.ForeColor = Color.Red;
             }
            
         }
 
         private void lstPatients_SelectedIndexChanged(object sender, EventArgs e)
         {
-            rTxtNote.Text = "";
-            txtName.Text = "";
-            txtNoteId.Text = "";
-            lstProblems.Items.Clear();
-            EnabledButtons();
-            lblError.Text = "";
-            btnAddNote.Enabled= false;
-            btnAdd.Enabled=true;
-            btnRemove.Enabled = true;
-            btnUpdate.Enabled= true;
-            btnDelete.Enabled= true;
-            string nName = lstPatients.GetItemText(lstPatients.SelectedItem);
-            foreach (var user in _manageClinicClass.ClinicNotes)
+            try
             {
-                if(nName==user.lstName)
+                rTxtNote.Text = "";
+                txtName.Text = "";
+                txtNoteId.Text = "";
+                lstBpMeasurment.Items.Clear();
+                lstProblems.Items.Clear();
+                EnabledButtons();
+                lblError.Text = "";
+                btnAddNote.Enabled = false;
+                btnAdd.Enabled = true;
+                btnRemove.Enabled = true;
+                btnUpdate.Enabled = true;
+                btnDelete.Enabled = true;
+                string nName = lstPatients.GetItemText(lstPatients.SelectedItem);
+                foreach (var user in _manageClinicClass.ClinicNotes)
                 {
-                    txtNoteId.Text = user.Id.ToString();
-                    txtName.Text = user.Name;
-                    dtpBirthDate.Value = user.BirthDate;
-                    rTxtNote.Text = user.Note;
-                    foreach (var prob in user.ArrayOfProblems)
+
+                    if (nName == user.lstName)
                     {
-                        lstProblems.Items.Add(prob);
+                        txtNoteId.Text = user.Id.ToString();
+                        txtName.Text = user.Name;
+                        dtpBirthDate.Value = user.BirthDate;
+                        rTxtNote.Text = user.Note;
+                        foreach (var prob in user.ArrayOfProblems)
+                        {
+                            lstProblems.Items.Add(prob);
+                        }
                     }
                 }
-            }
-        }
-
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            int index = _manageClinicClass.ClinicNotes.FindIndex(id => id.Id == int.Parse(txtNoteId.Text));
-
-            if (index != -1)
+            }catch(Exception ex)
             {
-                _manageClinicClass.ClinicNotes[index].Name = txtName.Text;
-                string[] nProblem = new string[lstProblems.Items.Count];
-                for (int i = 0; i < lstProblems.Items.Count; i++)
+                lblError.Text = ex.Message;
+                lblError.ForeColor = Color.Red;
+            }
+            
+        }
+       
+            private void btnUpdate_Click(object sender, EventArgs e)
+            {
+            try
+            {
+                int index = _manageClinicClass.ClinicNotes.FindIndex(id => id.Id == int.Parse(txtNoteId.Text));
+
+                if (index != -1)
                 {
-                    nProblem[i] = lstProblems.Items[i].ToString();
+
+                    _manageClinicClass.ClinicNotes[index].Name = txtName.Text;
+                    string[] nProblem = new string[lstProblems.Items.Count];
+                    for (int i = 0; i < lstProblems.Items.Count; i++)
+                    {
+                        nProblem[i] = lstProblems.Items[i].ToString();
+                    }
+                    _manageClinicClass.ClinicNotes[index].Problem = "";
+                    foreach (string problem in nProblem)
+                    {
+                        _manageClinicClass.ClinicNotes[index].Problem += $"{problem},";
+                    }
+                    _manageClinicClass.ClinicNotes[index].ArrayOfProblems = null;
+                    _manageClinicClass.ClinicNotes[index].ArrayOfProblems = nProblem;
+                    _manageClinicClass.ClinicNotes[index].Note = rTxtNote.Text;
+                    _manageClinicClass.ClinicNotes[index].BirthDate = dtpBirthDate.Value;
+
+                    _manageClinicClass.UpdateUser();
+
+                    lblError.Text = "Your note has been successfully Updated";
+                    lblError.ForeColor = Color.Green;
+                    DisableButtons();
                 }
-                _manageClinicClass.ClinicNotes[index].Problem = "";
-                foreach (string problem in nProblem)
-                {
-                    _manageClinicClass.ClinicNotes[index].Problem += $"{problem},";
-                }
-                _manageClinicClass.ClinicNotes[index].ArrayOfProblems = null;
-                _manageClinicClass.ClinicNotes[index].ArrayOfProblems = nProblem;
-                _manageClinicClass.ClinicNotes[index].Note = rTxtNote.Text;
-                _manageClinicClass.ClinicNotes[index].BirthDate = dtpBirthDate.Value;
-                
-                _manageClinicClass.UpdateUser();
-               
-                lblError.Text = "Your note has been successfully Updated";
-                lblError.ForeColor = Color.Green;
-                DisableButtons();
+            }
+            catch(Exception ex)
+            {
+                lblError.Text=ex.Message;
+                lblError.ForeColor = Color.Red;
             }
 
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if(lstPatients.SelectedIndex !=-1)
+            try
             {
-                int index = _manageClinicClass.ClinicNotes.FindIndex(id => id.Id == int.Parse(txtNoteId.Text));
-                _manageClinicClass.ClinicNotes.RemoveAt(index);
-                _manageClinicClass.UpdateUser();
-                lstPatients.Items.Remove(lstPatients.SelectedItem.ToString());
-                lblError.Text = "Your note has been successfully Deleted";
-                lblError.ForeColor = Color.Green;
-                DisableButtons();
+                if (lstPatients.SelectedIndex != -1)
+                {
+                    int index = _manageClinicClass.ClinicNotes.FindIndex(id => id.Id == int.Parse(txtNoteId.Text));
+                    _manageClinicClass.ClinicNotes.RemoveAt(index);
+                    _manageClinicClass.UpdateUser();
+                    lstPatients.Items.Remove(lstPatients.SelectedItem.ToString());
+                    lblError.Text = "Your note has been successfully Deleted";
+                    lblError.ForeColor = Color.Green;
+                    lstBpMeasurment.Items.Clear();
+                    DisableButtons();
+                }
+                else
+                {
+                    lblError.Text = "Please select patient name first";
+                    lblError.ForeColor = Color.Red;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                lblError.Text = "Please select patient name first";
+                lblError.Text = ex.Message;
                 lblError.ForeColor = Color.Red;
             }
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            if(lstProblems.SelectedIndex !=-1)
+            try
             {
-                lstProblems.Items.Remove(lstProblems.SelectedItem.ToString());
-                lblError.Text = "Your problem has been successfully Removed";
-                lblError.ForeColor = Color.Green;
+                if (lstProblems.SelectedIndex != -1)
+                {
+                    lstProblems.Items.Remove(lstProblems.SelectedItem.ToString());
+                    lblError.Text = "Your problem has been successfully Removed";
+                    lblError.ForeColor = Color.Green;
+                }
+                else
+                {
+                    lblError.Text = "Please select problem first";
+                    lblError.ForeColor = Color.Red;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                lblError.Text = "Please select problem first";
+                lblError.Text = ex.Message;
                 lblError.ForeColor = Color.Red;
             }
         }

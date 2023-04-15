@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Patient
 {
+ 
     public class ClinicNote
     {
-       
+      
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -29,7 +30,7 @@ namespace Patient
             BirthDate = birthDate;
             Note = note;
             lstName = $"{name}(Note Id:{id})";
-
+           
             if (string.IsNullOrEmpty(name))
                 throw new Exception("Please enter your name");
             if(birthDate > DateTime.Now)
